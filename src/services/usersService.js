@@ -14,10 +14,11 @@ try {
         cpf: validator.cpf
     })
 
-    const user = await this.userRepository.FindByEmail(validator.email);
+
+    const user = await this.UserRepository.FindByEmail(validator.email);
 
     const payload = {
-        id: user.id,
+        id: user.id, 
         name: user.name,
         email: user.email
     }
@@ -25,6 +26,7 @@ try {
     const Tokens = await this.TokensProvider.GenerateTokens(payload);
 
     const result = {
+        status: 201,
         user,
         Tokens: {
             AccessToken: Tokens.AccessToken,
@@ -37,11 +39,48 @@ try {
     if(error.code == 'P2002') {
         throw new AppError("user already exists", 403)
     }
+    throw new error;
 }
 };
+
+async get(validator){
+    try {
+        const user = await this.UserRepository.FindByEmail(validator.email);
+        if(!user) { 
+            throw new AppError("user not found", 404);
+        }
+        if(user.password !== validator.password) { 
+            throw new AppError("user not found", 404);
+        }
+
+        const payload = {
+            id: user.id, 
+            name: user.name,
+            email: user.email
+        }
+    
+        const Tokens = await this.TokensProvider.GenerateTokens(payload);
+    
+        const result = {
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            },
+            Tokens: {
+                AccessToken: Tokens.AccessToken,
+                RefreshToken: Tokens.RefreshToken
+            }
+        }
+    
+        return result
+    } catch (error) {
+        throw error;
+    }
+}
 }
 
-import PrismaUsers from "../../prisma/users/PrismaUsers.js";
+import PrismaUsers from "../repositories/users/PrismaUsers.js";
 import TokensProvider from "../utils/Tokens/TokensProvider.js";
 
 export default new UserService(

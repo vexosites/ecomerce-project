@@ -1,4 +1,4 @@
-class Tokens{
+export class Tokens{
     constructor(TokensProvide){
         this.TokensProvide = TokensProvide;
     }
@@ -7,6 +7,6 @@ class Tokens{
     }
 }
 
-import Jwt from "../Jwt";
+import Jwt from "../Jwt.js";
 
 export default new Tokens(Jwt);

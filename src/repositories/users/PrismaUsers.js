@@ -1,9 +1,11 @@
+import PrismaClient from "../../../prisma/prisma-client.js"
+
 class PrismaUsers{
     constructor(PrismaClient){
         this.PrismaClient = PrismaClient
     }
     async PostUser(data){
-        const result = await this.PrismaClient.User.create({
+        const result = await this.PrismaClient.user.create({
             data:{
                 name: data.name,
                 email: data.email,
@@ -13,8 +15,15 @@ class PrismaUsers{
         })
         return result
     }
-}
 
-import PrismaClient from '@prisma/client';
+    async FindByEmail(email){
+        const result = await this.PrismaClient.user.findUnique({
+         where: {
+            email: email
+         }
+        })
+        return result
+    }
+}
 
 export default new PrismaUsers(PrismaClient);

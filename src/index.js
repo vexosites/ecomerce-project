@@ -2,8 +2,6 @@ import express from 'express'
 import dotenv from './configs/dotenv.js';
 import app from './routes.js'
 
-app.use(express.json());
-
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

@@ -5,7 +5,7 @@ class TokensProvider{
     }
     async GenerateTokens(payload){
     const AccessToken = this.AccessToken.GenerateAccessToken(payload);
-    const RefreshToken = await this.RefreshToken.GenerateRefreshToken(payload);
+    const RefreshToken = await this.RefreshToken.GenerateRefreshToken(payload.id);
     return {
         AccessToken: AccessToken,
         RefreshToken: RefreshToken

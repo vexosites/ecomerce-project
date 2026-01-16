@@ -25,8 +25,6 @@ datasource db {
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-
-
 enum Role {
   USER
   ADMIN
@@ -63,13 +61,13 @@ model User {
   email     String   @unique
   password  String
   role      Role     @default(USER)
-  cpf String @unique
+  cpf       String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  addresses Address[]
-  orders    Order[]
-  cart      Cart?
+  addresses    Address[]
+  orders       Order[]
+  cart         Cart?
   refreshToken RefreshToken?
 }
 
@@ -81,7 +79,7 @@ model Category {
   slug      String   @unique
   createdAt DateTime @default(now())
 
-  products  Product[]
+  products Product[]
 }
 
 // -----------------------
@@ -97,19 +95,19 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  images      ProductImage[]
-  orderItems  OrderItem[]
-  cartItems   CartItem[]
+  images     ProductImage[]
+  orderItems OrderItem[]
+  cartItems  CartItem[]
 }
 
 // -----------------------
 
 model ProductImage {
-  id        Int    @id @default(autoincrement())
-  url       String
+  id  Int    @id @default(autoincrement())
+  url String
 
   productId Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -121,21 +119,21 @@ model Cart {
   id     Int @id @default(autoincrement())
   userId Int @unique
 
-  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items  CartItem[]
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
 }
 
 // -----------------------
 
 model CartItem {
-  id        Int @id @default(autoincrement())
-  quantity  Int
+  id       Int @id @default(autoincrement())
+  quantity Int
 
   cartId    Int
   productId Int
 
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
   @@unique([cartId, productId])
 }
@@ -148,26 +146,26 @@ model Order {
   total     Decimal     @db.Decimal(10, 2)
   createdAt DateTime    @default(now())
 
-  userId    Int
-  user      User        @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
-  items     OrderItem[]
-  payment   Payment?
-  address   OrderAddress?
+  items   OrderItem[]
+  payment Payment?
+  address OrderAddress?
 }
 
 // -----------------------
 
 model OrderItem {
-  id        Int     @id @default(autoincrement())
-  quantity  Int
-  price     Decimal @db.Decimal(10, 2)
+  id       Int     @id @default(autoincrement())
+  quantity Int
+  price    Decimal @db.Decimal(10, 2)
 
   orderId   Int
   productId Int
 
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 }
 
 // -----------------------
@@ -178,8 +176,8 @@ model Payment {
   status    PaymentStatus @default(PENDING)
   createdAt DateTime      @default(now())
 
-  orderId   Int   @unique
-  order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId Int   @unique
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 // -----------------------
@@ -187,15 +185,15 @@ model Payment {
 // -----------------------
 
 model Address {
-  id        Int    @id @default(autoincrement())
-  street    String
-  number    String
-  city      String
-  state     String
-  zipCode   String
+  id      Int    @id @default(autoincrement())
+  street  String
+  number  String
+  city    String
+  state   String
+  zipCode String
 
-  userId    Int
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // -----------------------
@@ -203,15 +201,15 @@ model Address {
 // -----------------------
 
 model OrderAddress {
-  id        Int    @id @default(autoincrement())
-  street    String
-  number    String
-  city      String
-  state     String
-  zipCode   String
+  id      Int    @id @default(autoincrement())
+  street  String
+  number  String
+  city    String
+  state   String
+  zipCode String
 
-  orderId   Int   @unique
-  order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId Int   @unique
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 model RefreshToken {

@@ -1,9 +1,15 @@
-import Tokens from "./Tokens";
+import Tokens from "./Tokens.js";
 
-class AcessToken extends Tokens{
+class AccessToken{
+
+    constructor(Tokens){
+        this.Tokens = Tokens;
+    }
 
     GenerateAccessToken(payload){
-        return this.GenerateToken(payload, '1h',);
+        return this.Tokens.GenerateToken(payload, '1h');
     }
 
 }
+
+export default new AccessToken(Tokens)

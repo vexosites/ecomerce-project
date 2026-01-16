@@ -33,6 +33,20 @@ class UserValidator {
   
       return { name, email, password, cpf };
     }
+    get(req){
+      if(!req.params) throw new Error("invalid body!");
+      
+      const {email, password} = req.params;
+
+      if(!email || !password) throw new Error("missing required fields");
+
+      const passwordRegex = /^(?=.*\d).{8,}$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      if(!passwordRegex.test(password) || !emailRegex.test(email)) throw new Error('invalid required fields');
+
+      return {email, password};
+    }
   }
   
   export default new UserValidator();

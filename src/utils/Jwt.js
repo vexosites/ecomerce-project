@@ -3,7 +3,7 @@ class Jwt{
         this.jwtLibrary = jwtLibrary;
     }
     GenerateToken(payload, time){
-        this.jwtLibrary.sign(payload, process.env.jwt_secret, {expiresIn: time});
+        return this.jwtLibrary.sign(payload, process.env.JWT_SECRET, {expiresIn: time});
     }
 }
 

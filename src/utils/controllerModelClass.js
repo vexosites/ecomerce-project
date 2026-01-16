@@ -9,12 +9,12 @@ class Controller {
         const data = await this.validator(req);
         const result = await this.service(data);
   
-        return res.status(200).json({
+        return res.status(result.status || 200).json({
           success: true,
           result
         });
       } catch (error) {
-        return res.status(error.status || 500).json({
+        return res.status(error.statusCode || 500).json({
           success: false,
           error: error.message
         });
