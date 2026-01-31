@@ -13,7 +13,7 @@ async get(req, res){
 }
 }
 
-import productsService from "../../services/productsService.js";
+import productsService from "../../services/products/productsService.js";
 import productsValidator from "../../validators/productsValidator.js"
 
 const ControllerModelInstancePost = new Controller({validator: productsValidator.post.bind(productsValidator), service: productsService.post.bind(productsService)});

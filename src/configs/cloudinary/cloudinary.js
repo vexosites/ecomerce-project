@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
+
+console.log(process.env.cloudinary_api_key);
     // Configuration
-const Cloudinary = cloudinary.config({ 
-       long_url_signature: process.env.cloudinary_url
-    });
+    cloudinary.config();
 
 export default cloudinary;

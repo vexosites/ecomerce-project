@@ -1,4 +1,4 @@
-import AppError from "../errors/UserError.js";
+import AppError from "../../errors/UserError.js";
 
 class ProductService{
 constructor(ProductRepository, imgsService, ImagesRepository){
@@ -10,7 +10,7 @@ async post(validator){
 try {
     const { name, categoryId, description, price, stock, active, slug } = validator;
 
-    const product = await this.ProductRepository.postProductBase({
+    const product = await this.ProductRepository.postProduct({
         name,
         categoryId,
         price,
@@ -46,21 +46,15 @@ try {
 async get(categoryId){
     try {
         const products = await this.ProductRepository.getProductsByCategoryId(categoryId);
-        if(!products.length){
-            throw new AppError('invalid category', 404)
-        }
         return products;
     } catch (error) {
-        if(error.code === 'P2003'){
-            throw new AppError('invalid category', 404);
-        }
-        throw error
+        throw error;
     }
 }
 }
 
-import ProductRepository from "../repositories/ProductsRepository.js";
-import ImagesServices from "./imgsService.js"
-import ImagesRepository from "../repositories/ImagesRepository.js";
+import ProductRepository from "../../repositories/products/ProductsCentralRepository.js";
+import ImagesServices from "../imgsService.js"
+import ImagesRepository from "../../repositories/Images/ImagesRepository.js";
 
 export default new ProductService(ProductRepository, ImagesServices, ImagesRepository);

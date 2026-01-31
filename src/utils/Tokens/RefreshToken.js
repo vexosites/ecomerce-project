@@ -28,7 +28,7 @@ class RefreshToken{
     }
 }
 
-import RefreshTokenRepository from "../../repositories/RefreshTokenRepository.js";
+import RefreshTokenRepository from "../../repositories/RefreshTokens/RefreshTokenRepository.js";
 import Tokens from "./Tokens.js";
 
 export default new RefreshToken({RefreshTokenRepository, Tokens});

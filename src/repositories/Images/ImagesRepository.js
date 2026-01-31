@@ -7,6 +7,6 @@ async PostImages(imgsArray){
 }
 }
 
-import PrismaImagens from "./Images/PrismaImagens.js"
+import PrismaImagens from "./PrismaImagens.js"
 
 export default new ImagesRepository(PrismaImagens);

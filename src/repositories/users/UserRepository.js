@@ -14,6 +14,6 @@ class UserRepository{
     }
 }
 
-import PrismaUsers from "./users/PrismaUsers.js";
+import PrismaUsers from "./PrismaUsers.js";
 
 export default new UserRepository(PrismaUsers);

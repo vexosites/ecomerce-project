@@ -12,6 +12,6 @@ async DeleteRefreshToken(userId){
 }
 }
 
-import PrismaRefreshTokens from "./RefreshTokens/PrismaRefreshTokens.js";
+import PrismaRefreshTokens from "./PrismaRefreshTokens.js";
 
 export default new RefreshTokenRepository(PrismaRefreshTokens);

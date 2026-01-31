@@ -13,6 +13,6 @@ class ProductsRepository{
     }
 }
 
-import PrismaProducts from "./products/PrismaProducts.js";
+import PrismaProducts from "./PrismaProducts.js";
 
 export default new ProductsRepository(PrismaProducts);
