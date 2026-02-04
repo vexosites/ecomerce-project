@@ -3,7 +3,7 @@ class ProductsRepository{
         this.orm = orm;
     }
 
-    async postProductBase(product){
+    async create(product){
         const result = await this.orm.postProductBase(product);
         return result;
     }
