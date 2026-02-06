@@ -230,46 +230,9 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.UserOrderByRelevanceFieldEnum = {
-  name: 'name',
-  email: 'email',
-  password: 'password',
-  cpf: 'cpf'
-};
-
-exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
-  name: 'name',
-  slug: 'slug'
-};
-
-exports.Prisma.ProductOrderByRelevanceFieldEnum = {
-  name: 'name',
-  slug: 'slug',
-  description: 'description'
-};
-
-exports.Prisma.ProductImageOrderByRelevanceFieldEnum = {
-  url: 'url'
-};
-
-exports.Prisma.AddressOrderByRelevanceFieldEnum = {
-  street: 'street',
-  number: 'number',
-  city: 'city',
-  state: 'state',
-  zipCode: 'zipCode'
-};
-
-exports.Prisma.OrderAddressOrderByRelevanceFieldEnum = {
-  street: 'street',
-  number: 'number',
-  city: 'city',
-  state: 'state',
-  zipCode: 'zipCode'
-};
-
-exports.Prisma.RefreshTokenOrderByRelevanceFieldEnum = {
-  token: 'token'
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
 };
 exports.Role = exports.$Enums.Role = {
   USER: 'USER',

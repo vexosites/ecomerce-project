@@ -1,8 +1,7 @@
 import { Schema } from "redis-om";
-import client from "../../redisClient";
+import client from "../../redisClient.js";
 
-import { Schema } from "redis-om"
-import client from "./redisClient.js"
+console.log('schema', Schema)
 
 const productSchema = new Schema(
   "product",
@@ -10,18 +9,19 @@ const productSchema = new Schema(
     name: { type: "string" },
     price: { type: "number" },
     stock: { type: "number" },
-    category: { type: "string" },
     active: {type: "boolean"},
     slug: {type: "string"},
     description: {type: "string"},
-    categoryId: {type: "int"},
-    createdAt: {type: "String" },
+    categoryId: {type: "number"},
+    createdAt: {type: "string" },
     updatedAt: {type: "string"}
   },
   {
     dataStructure: "JSON"
   }
 )
+const productRepository = client.fetchRepository(productSchema)
 
-export const productRepository = client.fetchRepository(productSchema)
+export default productRepository; 
+
 await productRepository.createIndex()

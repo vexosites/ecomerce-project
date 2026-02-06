@@ -45,8 +45,9 @@ try {
 }
 async get(categoryId){
     try {
-        const products = await this.ProductRepository.getProductsByCategoryId(categoryId);
-        if(!products.length){
+        const products = await this.ProductRepository.findByCategoryId(categoryId);
+        console.log('products-service', products)
+        if(!products){
             throw new AppError('invalid category', 404)
         }
         return products;
@@ -59,8 +60,8 @@ async get(categoryId){
 }
 }
 
-import ProductRepository from "../repositories/ProductsRepository.js";
+import ProductRepository from "../repositories/products-repository.js";
 import ImagesServices from "./imgsService.js"
-import ImagesRepository from "../repositories/ImagesRepository.js";
+import ImagesRepository from "../repositories/images-repository.js";
 
 export default new ProductService(ProductRepository, ImagesServices, ImagesRepository);

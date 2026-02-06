@@ -18,25 +18,20 @@ export class Products_repository {
 
   async findByCategoryId(categoryId) {
     const cache = await this.cache_orm.findByCategoryId(categoryId);
-    console.log(cache)
-    if (cache.length > 0) {
+    if (products?.lenght) {
       return cache;
     }
-    const products = await this.db_orm.findByCategoryId(categoryId);
-    console.log('products', products)
-    if(products.length < 1){
-      return null;
-    }
+    const products = await this.cache_orm.findByCategoryId(categoryId);
     return products;
   }
 
   async findByName(user) {}
 }
 
-import productsRepository from "./db/ProductsRepository.js";
-import RedisOmProducts from "../infra/redis-om/Redis-om-products.js";
+import PrismaProducts from "../infra/Prisma/PrismaUsers.js";
+import RedisOmProducts from "../infra/redis-om/Redis-om-users.js";
 
 export default new Products_repository({
-  db_orm: productsRepository,
+  db_orm: PrismaProducts,
   cache_orm: RedisOmProducts,
 });

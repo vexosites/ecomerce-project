@@ -1,6 +1,6 @@
-import Controller from "../../utils/controllerModelClass.js";
-import usersService from "../../services/usersService.js";
-import usersValidator from "../../validators/usersValidator.js";
+import Controller from "../utils/controllerModelClass.js";
+import usersService from "../services/usersService.js";
+import usersValidator from "../validators/usersValidator.js";
 
 class UserController {
   constructor(controllerInstancePost, controllerInstanceGet) {

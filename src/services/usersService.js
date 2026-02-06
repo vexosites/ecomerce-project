@@ -80,10 +80,10 @@ async get(validator){
 }
 }
 
-import PrismaUsers from "../repositories/users/PrismaUsers.js";
+import UsersRepository from "../repositories/users-repository.js";
 import TokensProvider from "../utils/Tokens/TokensProvider.js";
 
 export default new UserService(
-PrismaUsers,
+UsersRepository,
 TokensProvider
 );

@@ -8,11 +8,11 @@ class ProductsRepository{
         return result;
     }
 
-    async getProductsByCategoryId(categoryId){
+    async findByCategoryId(categoryId){
         return await this.orm.getProductsByCategoryId(categoryId)
     }
 }
 
-import PrismaProducts from "./products/PrismaProducts.js";
+import PrismaProducts from "../../infra/Prisma/PrismaProducts.js";
 
 export default new ProductsRepository(PrismaProducts);
