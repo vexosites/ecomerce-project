@@ -1,7 +1,18 @@
-import { Client } from "redis-om"
+import { Client } from "redis-om";
 
-const client = new Client()
+const client = new Client();
 
-await client.open(process.env.REDIS_URL)
+export async function connectRedis() {
+  try {
+    if (!client.isOpen()) {
+      await client.open(process.env.REDIS_URL);
+      console.log("Redis conectado");
+    }
+  } catch (error) {
+    console.error("Erro ao conectar no Redis:", error);
+  }
+}
 
-export default client
+await connectRedis()
+
+export default client;

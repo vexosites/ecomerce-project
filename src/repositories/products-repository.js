@@ -8,7 +8,7 @@ export class Products_repository {
     try {
       const data = await this.db_orm.create(product);
 
-      const cache = await this.cache_orm.create(data);
+      const cache = await this.cache_orm.create(product);
 
       return data;
     } catch (error) {
@@ -27,6 +27,7 @@ export class Products_repository {
     if(products.length < 1){
       return null;
     }
+    await this.cache_orm.set(products);
     return products;
   }
 
@@ -34,7 +35,7 @@ export class Products_repository {
 }
 
 import productsRepository from "./db/ProductsRepository.js";
-import RedisOmProducts from "../infra/redis-om/Redis-om-products.js";
+import RedisOmProducts from "./cache/ProductsCachingRepository.js";
 
 export default new Products_repository({
   db_orm: productsRepository,

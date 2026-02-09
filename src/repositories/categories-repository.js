@@ -1,22 +1,18 @@
-class Products_repository {
+class CategoriesRepository {
   constructor({ db_orm, cache_orm }) {
     this.db_orm = db_orm;
-    this.cache_orm = cache_orm;
   }
 
   async create(category) {
-    const data = await this.db_orm.create(category);
 
-    const cache = await this.cache_orm.create(data);
+    const data = await this.db_orm.create(category);
 
     return data;
   }
 }
 
-import CategoriesRepository from "./db/categoriesRepository.js";
-import CachingCategories from "./cache/categoriesRepository.js";
+import Categories_repository from "./db/categoriesRepository.js";
 
-export default new Products_repository({
-  db_orm: PrismaCategories,
-  cache_orm: RedisOmCategories,
+export default new CategoriesRepository({
+  db_orm: Categories_repository
 });

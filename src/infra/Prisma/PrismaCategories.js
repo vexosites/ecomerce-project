@@ -2,12 +2,12 @@ class PrismaCategories {
   constructor(prismaClient) {
     this.prismaClient = prismaClient;
   }
-  async create(category) {
+  async create(data) {
     try {
-      const category = await this.prismaClient.category.create({
+      const category = await this.prismaClient.Category.create({
         data: {
-          name: category.name,
-          slug: category.slug,
+          name: data.name,
+          slug: data.slug,
         },
       });
       return category;

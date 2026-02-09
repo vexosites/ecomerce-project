@@ -1,15 +1,18 @@
-import express from 'express'
-import users from './routes/users.js';
-import products from './routes/products.js';
+import express from "express";
+import users from "./routes/users.js";
+import products from "./routes/products.js";
+import categories from "./routes/categories.js";
 
-const app = express()
+const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('Server running!'));
+app.get("/", (req, res) => res.send("Server running!"));
 
-app.use('/users', users);
+app.use("/users", users);
 
-app.use('/products', products);
+app.use("/products", products);
+
+app.use("/categories", categories);
 
 export default app;

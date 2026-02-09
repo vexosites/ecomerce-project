@@ -2,7 +2,7 @@ class ImagesRepository {
   constructor(Images) {
     this.Images = Images;
   }
-  async PostImages(imgsArray) {
+  async create(imgsArray) {
     return await this.Images.PostImages(imgsArray);
   }
 }

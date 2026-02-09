@@ -9,4 +9,4 @@ class CategoriesRepository {
 
 import PrismaCategories from "../../infra/Prisma/PrismaCategories.js";
 
-export default new ImagesRepository(PrismaCategories);
+export default new CategoriesRepository(PrismaCategories);

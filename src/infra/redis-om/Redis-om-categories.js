@@ -3,6 +3,7 @@ class RedisOmCategories {
     this.categoriesRepository = categoriesRepository;
   }
   async create(category){
+    console.log('class', this.categoriesRepository);
     const category = await this.categoriesRepository.createEntity({
         name: category.name,
         slug: category.slug

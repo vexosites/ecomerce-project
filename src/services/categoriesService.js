@@ -1,4 +1,4 @@
-import AppError from "../errors/UserError";
+import AppError from "../errors/UserError.js";
 
 class categoriesService {
   constructor(categoriesRepository) {
@@ -17,4 +17,6 @@ class categoriesService {
   }
 }
 
-export default new categoriesService();
+import categoriesRepository from "../repositories/categories-repository.js";
+
+export default new categoriesService(categoriesRepository);

@@ -1,7 +1,7 @@
 import Controller from "../utils/controllerModelClass.js";
 
-class ProductController {
-  constructor(ControllerModelInstancePost, ControllerModelInstanceGet) {
+class CategoriesController {
+  constructor(ControllerModelInstancePost) {
     this.ControllerModelInstancePost = ControllerModelInstancePost;
   }
   async post(req, res) {
@@ -9,14 +9,14 @@ class ProductController {
   }
 }
 
-import categoriesService from "../services/productsService.js";
-import categoriesValidator from "../validators/productsValidator.js";
+import categoriesService from "../services/categoriesService.js";
+import categoriesValidator from "../validators/categoriesValidator.js";
 
 const ControllerModelInstancePost = new Controller({
-  validator: categoriesValidator.post.bind(productsValidator),
-  service: categoriesService.post.bind(productsService),
+  validator: categoriesValidator.post.bind(categoriesValidator),
+  service: categoriesService.post.bind(categoriesService),
 });
 
-export default new ProductController(
+export default new CategoriesController(
   ControllerModelInstancePost
 );

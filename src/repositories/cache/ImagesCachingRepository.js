@@ -2,9 +2,10 @@ class ProductsCachingRepository {
   constructor(cacheProvide) {
     this.cacheProvide = cacheProvide;
   }
-  async create(category) {
-    const result = await this.cacheProvide.create(category);
-    return result
+  async create(images) {
+    console.log('ImagesCachingRepository.js-images', images)
+    const result = await this.cacheProvide.create(images);
+    return result;
   }
 }
 

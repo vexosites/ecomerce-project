@@ -1,11 +1,8 @@
 import express from "express";
-import upload from "../middlewares/multerUpload.js";
-import CategoriesController from "../controllers/products.js";
+import CategoriesController from "../controllers/categories.js";
 
 const Router = express.Router();
 
-Router.post('/', upload.array('file'), CategoriesController.post.bind(ProductController));
-
-Router.get('/category/:id', CategoriesController.get.bind(ProductController));
+Router.post('/', CategoriesController.post.bind(CategoriesController));
 
 export default Router;

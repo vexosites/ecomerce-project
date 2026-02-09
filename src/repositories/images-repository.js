@@ -19,10 +19,10 @@ export class Products_repository {
   async findByName(user) {}
 }
 
-import PrismaProducts from "../infra/Prisma/PrismaProducts.js";
-import RedisOmProducts from "../infra/redis-om/Redis-om-products.js";
+import ImagesRepository from "./db/ImagesRepository.js";
+import RedisOmProducts from "./cache/ImagesCachingRepository.js";
 
 export default new Products_repository({
-  db_orm: PrismaProducts,
+  db_orm: ImagesRepository,
   cache_orm: RedisOmProducts,
 });
