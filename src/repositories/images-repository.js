@@ -4,14 +4,29 @@ export class Products_repository {
     this.cache_orm = cache_orm;
   }
 
-  async create(user) {
+  async create(images) {
     try {
-      const data = await this.db_orm.create(user);
+      console.log('images', images)
+      const data = await this.db_orm.create(images);
 
-      const cache = await this.cache_orm.create(user);
+      const imgs = {
+        urls: images.map(i => i.url),
+        productId: images.productId
+      }
+      const cache = await this.cache_orm.create(imgs);
 
       return data;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async findManyByProductIds(ids){
+    try {
+      const imgs = await this.db_orm.findManyByProductIds(ids);
+      return imgs
+    } catch (error) {
+      console.log(error);
       throw error;
     }
   }

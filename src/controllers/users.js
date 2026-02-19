@@ -1,39 +1,21 @@
-import Controller from "../utils/controllerModelClass.js";
 import usersService from "../services/usersService.js";
 import usersValidator from "../validators/usersValidator.js";
 
 class UserController {
-  constructor(controllerInstancePost, controllerInstanceGet) {
-    this.ControllerModelPost = controllerInstancePost;
-    this.ControllerModelGet = controllerInstanceGet
+  constructor(controller) {
+    this.Controller = controller;
   }
 
   async post(req, res) {
     // chama o método handle do Controller
-    return await this.ControllerModelPost.handle(req, res);
+    return await this.Controller(req, res, usersValidator.post.bind(usersValidator), usersService.post.bind(usersService));
   }
 
   async get(req, res) {
-    return await this.ControllerModelGet.handle(req, res);
+    return await this.Controller(req, res, usersValidator.get.bind(usersValidator), usersService.post.bind(usersService));
   }
 }
 
-// cria uma instância do Controller passando validator e service
-const userControllerInstancePost = new Controller(
-{
-  validator: usersValidator.post,
-  service: usersService.post.bind(usersService)
-}
-);
+import Controller from "../utils/controllerModelClass.js";
 
-
-const userControllerInstanceGet = new Controller(
-{
-  validator: usersValidator.get,
-  service: usersService.get.bind(usersService)
-}
-);
-
-
-// exporta o UserController com a instância injetada
-export default new UserController(userControllerInstancePost, userControllerInstanceGet);
+export default new UserController(Controller);

@@ -10,6 +10,6 @@ Router.post(
   ProductController.post.bind(ProductController)
 );
 
-Router.get("/category/:id", ProductController.get.bind(ProductController));
+Router.get("/:name", ProductController.get.bind(ProductController));
 
 export default Router;

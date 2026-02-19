@@ -1,9 +1,9 @@
 import AppError from "../errors/UserError.js";
+import imagesRepository from "../repositories/images-repository.js";
 
 class ProductService {
-  constructor(ProductRepository, imgsService, ImagesRepository) {
+  constructor(ProductRepository, imgsService) {
     this.ProductRepository = ProductRepository;
-    this.ImagesRepository = ImagesRepository;
     this.imgsService = imgsService;
   }
   async post(validator) {
@@ -20,14 +20,18 @@ class ProductService {
         active,
         slug,
       });
-
       const imgs = await this.imgsService.postArray(validator.imgs);
 
-      const imgs_model = imgs.map((i) => {
-        return { url: i.url, productId: product.id };
-      });
+      console.log('imgs', imgs)
 
-      const img = await this.ImagesRepository.create(imgs_model);
+      const imgs_url = imgs.map(i => i.url);
+
+      const imgs_model = imgs_url.map(i => ({
+        url: i,
+        productId: product.id
+      }))
+
+      const img = await imagesRepository.create(imgs_model);
 
       return {
         product,
@@ -44,31 +48,27 @@ class ProductService {
       throw error;
     }
   }
-  async get(categoryId) {
-    try {
-      const products = await this.ProductRepository.findByCategoryId(
-        categoryId
-      );
-      console.log("products-service", products);
-      if (!products) {
-        throw new AppError("invalid category", 404);
-      }
-      return products;
-    } catch (error) {
-      if (error.code === "P2003") {
-        throw new AppError("invalid category", 404);
-      }
-      throw error;
-    }
+
+  async get(name){
+   try {
+    const product_raw = await this.ProductRepository.findByName(name);
+    if(!product_raw) throw new AppError('product not found', 404)
+    console.log('product raw', product_raw)
+    const imgs = await imagesRepository.findManyByProductIds([product_raw.id]);
+    const product = product_raw;
+    product.imgs = imgs
+    return product;
+   } catch (error) {
+    console.log(error)
+    throw error;
+   } 
   }
 }
 
 import ProductRepository from "../repositories/products-repository.js";
 import ImagesServices from "./imgsService.js";
-import ImagesRepository from "../repositories/images-repository.js";
 
 export default new ProductService(
   ProductRepository,
   ImagesServices,
-  ImagesRepository
 );

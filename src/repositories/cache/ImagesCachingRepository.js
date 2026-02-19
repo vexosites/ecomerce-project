@@ -1,14 +1,13 @@
-class ProductsCachingRepository {
+class ImagesCachingRepository {
   constructor(cacheProvide) {
     this.cacheProvide = cacheProvide;
   }
   async create(images) {
-    console.log('ImagesCachingRepository.js-images', images)
     const result = await this.cacheProvide.create(images);
     return result;
   }
 }
 
-import RedisOmProducts from "../../infra/redis-om/Redis-om-products.js";
+import imagesRedisRepository from '../../infra/redis/images-redis-repository.js';
 
-export default new ProductsCachingRepository(RedisOmProducts);
+export default new ImagesCachingRepository(imagesRedisRepository);

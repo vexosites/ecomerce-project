@@ -1,22 +1,21 @@
-import Controller from "../utils/controllerModelClass.js";
-
-class CategoriesController {
-  constructor(ControllerModelInstancePost) {
-    this.ControllerModelInstancePost = ControllerModelInstancePost;
-  }
-  async post(req, res) {
-    return await this.ControllerModelInstancePost.handle(req, res);
-  }
-}
 
 import categoriesService from "../services/categoriesService.js";
 import categoriesValidator from "../validators/categoriesValidator.js";
 
-const ControllerModelInstancePost = new Controller({
-  validator: categoriesValidator.post.bind(categoriesValidator),
-  service: categoriesService.post.bind(categoriesService),
-});
+class CategoriesController {
+  constructor(Controller) {
+    this.Controller = Controller
+  }
+  async post(req, res) {
+    return await this.Controller(req, res, categoriesValidator.post.bind(categoriesValidator), categoriesService.post.bind(categoriesService));
+  }
+  async get(req, res) {
+    return await this.Controller(req, res, categoriesValidator.get.bind(categoriesValidator), categoriesService.get.bind(categoriesService))
+  }
+}
+
+import Controller from "../utils/controllerModelClass.js";
 
 export default new CategoriesController(
-  ControllerModelInstancePost
+  Controller
 );

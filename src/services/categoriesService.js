@@ -1,8 +1,9 @@
 import AppError from "../errors/UserError.js";
 
 class categoriesService {
-  constructor(categoriesRepository) {
+  constructor(categoriesRepository, quickSort) {
     this.categoriesRepository = categoriesRepository;
+    this.quickSort = quickSort;
   }
   async post(validator) {
     try {
@@ -15,8 +16,59 @@ class categoriesService {
       throw new AppError(error, 400);
     }
   }
+  async get(categoryId) {
+    try {
+      const products_raw = await this.categoriesRepository.findByCategoryId(
+        categoryId
+      );
+
+      console.log("products", products_raw);
+
+      const imgs_raw = await imagesRepository.findManyByProductIds(
+        products_raw.map((p) => p.id)
+      );
+
+      const product_sorted = this.quickSort(products_raw, "id");
+
+      console.log("product_sorted", product_sorted);
+
+      const imgs_sorted = this.quickSort(imgs_raw, "productId");
+
+      console.log("imgs", imgs_raw, "sorted", imgs_sorted);
+
+      let imgIndex = 0;
+
+      const products = product_sorted.map((p) => {
+        if (p.id !== imgs_sorted[imgIndex]?.productId) {
+          return { ...p, imgs: {} };
+        }
+
+        const img = imgs_sorted[imgIndex];
+        imgIndex++;
+
+        return {
+          ...p,
+          imgs: img,
+        };
+      });
+
+      console.log("products-service", products);
+      if (!products || products.lenght < 1) {
+        throw new AppError("invalid category", 404);
+      }
+      return products;
+    } catch (error) {
+      if (error.code === "P2003") {
+        throw new AppError("invalid category", 404);
+      }
+      throw error;
+    }
+  }
 }
 
-import categoriesRepository from "../repositories/categories-repository.js";
+import quickSort from "../utils/quickSort.js";
 
-export default new categoriesService(categoriesRepository);
+import categoriesRepository from "../repositories/categories-repository.js";
+import imagesRepository from "../repositories/images-repository.js";
+
+export default new categoriesService(categoriesRepository, quickSort);

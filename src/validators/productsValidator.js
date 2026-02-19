@@ -19,8 +19,9 @@ class ProductsValidator {
     }
     return { name, description, price: Number(price), active, stock: Number(stock), categoryId: Number(categoryId), slug, imgs };
   }
-  get(req) {
-    return parseInt(req.params.id);
+  get(req){
+    const { name } = req.params;
+    return name;
   }
 }
 

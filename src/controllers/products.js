@@ -1,32 +1,18 @@
-import Controller from "../utils/controllerModelClass.js";
-
-class ProductController {
-  constructor(ControllerModelInstancePost, ControllerModelInstanceGet) {
-    this.ControllerModelInstancePost = ControllerModelInstancePost;
-    this.ControllerModelInstanceGet = ControllerModelInstanceGet;
-  }
-  async post(req, res) {
-    return await this.ControllerModelInstancePost.handle(req, res);
-  }
-  async get(req, res) {
-    return await this.ControllerModelInstanceGet.handle(req, res);
-  }
-}
-
 import productsService from "../services/productsService.js";
 import productsValidator from "../validators/productsValidator.js";
 
-const ControllerModelInstancePost = new Controller({
-  validator: productsValidator.post.bind(productsValidator),
-  service: productsService.post.bind(productsService),
-});
+class ProductController {
+  constructor(controller) {
+    this.Controller = controller
+  }
+  async post(req, res) {
+    return await this.Controller(req, res, productsValidator.post.bind(productsValidator), productsService.post.bind(productsService));
+  }
+  async get(req, res) {
+    return await this.Controller(req, res, productsValidator.get.bind(productsValidator), productsService.get.bind(productsService));
+  }
+}
 
-const ControllerModelInstanceGet = new Controller({
-  validator: productsValidator.get.bind(productsValidator),
-  service: productsService.get.bind(productsService),
-});
+import Controller from "../utils/controllerModelClass.js";
 
-export default new ProductController(
-  ControllerModelInstancePost,
-  ControllerModelInstanceGet
-);
+export default new ProductController(Controller);

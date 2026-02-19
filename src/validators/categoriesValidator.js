@@ -8,6 +8,9 @@ class ProductsValidator {
     }
     return { name, slug };
   }
+  get(req) {
+    return parseInt(req.params.id);
+  }
 }
 
 export default new ProductsValidator();

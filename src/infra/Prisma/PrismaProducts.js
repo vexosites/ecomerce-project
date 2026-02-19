@@ -15,10 +15,19 @@ return await this.PrismaClient.product.create({
     }
 })
 }
-async getProductsByCategoryId(categoryId){
+async findByCategoryId(categoryId){
     return await this.PrismaClient.product.findMany({
         where: {
             categoryId: categoryId
+        }
+    })
+}
+async findByName(name){
+    return await this.PrismaClient.product.findFirst({
+        where: {
+            name: {
+                contains: name
+            }
         }
     })
 }

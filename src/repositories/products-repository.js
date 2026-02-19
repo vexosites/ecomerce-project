@@ -15,23 +15,14 @@ export class Products_repository {
       throw error;
     }
   }
-
-  async findByCategoryId(categoryId) {
-    const cache = await this.cache_orm.findByCategoryId(categoryId);
-    console.log(cache)
-    if (cache.length > 0) {
-      return cache;
+  async findByName(name) {
+    try {
+      const product = await this.db_orm.findByName(name);
+      return product;
+    } catch (error) {
+      throw error
     }
-    const products = await this.db_orm.findByCategoryId(categoryId);
-    console.log('products', products)
-    if(products.length < 1){
-      return null;
-    }
-    await this.cache_orm.set(products);
-    return products;
   }
-
-  async findByName(user) {}
 }
 
 import productsRepository from "./db/ProductsRepository.js";

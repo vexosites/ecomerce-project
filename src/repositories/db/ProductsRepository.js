@@ -9,7 +9,11 @@ class ProductsRepository{
     }
 
     async findByCategoryId(categoryId){
-        return await this.orm.getProductsByCategoryId(categoryId)
+        return await this.orm.findByCategoryId(categoryId)
+    }
+
+    async findByName(name){
+        return await this.orm.findByName(name);
     }
 }
 

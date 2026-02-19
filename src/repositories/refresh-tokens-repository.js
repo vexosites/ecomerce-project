@@ -32,9 +32,9 @@ export class Products_repository {
 }
 
 import PrismaProducts from "../infra/Prisma/PrismaUsers.js";
-import RedisOmProducts from "../infra/redis-om/Redis-om-users.js";
+import cacheRepository from "./cache/RefreshTokensCachingRepository.js";
 
 export default new Products_repository({
   db_orm: PrismaProducts,
-  cache_orm: RedisOmProducts,
+  cache_orm: cacheRepository,
 });
