@@ -5,27 +5,21 @@ export class Products_repository {
   }
 
   async create(product) {
-    try {
       const data = await this.db_orm.create(product);
 
       const cache = await this.cache_orm.create(data);
 
       return data;
-    } catch (error) {
-      throw error;
-    }
   }
-
-  async findByCategoryId(categoryId) {
-    const cache = await this.cache_orm.findByCategoryId(categoryId);
-    if (cache?.lenght) {
+  
+  async findByUserId(userId){
+    const cache = await this.cache_orm.findByUserId(userId);
+    if(cache?.lenght < 1){
       return cache;
     }
-    const products = await this.cache_orm.findByCategoryId(categoryId);
-    if(products.lenght < 1){ 
-      return null;
-    }
-    return products;
+    const result = await this.db_orm.findByUserId(userId);
+
+    return result;
   }
 
   async findByName(user) {}

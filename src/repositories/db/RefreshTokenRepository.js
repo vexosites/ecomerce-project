@@ -1,15 +1,19 @@
 class RefreshTokenRepository {
-    constructor(RefreshTokens){
-        this.RefreshTokens = RefreshTokens;
-    }
-async PostRefreshToken(token){
-    const result = await this.RefreshTokens.PostRefreshToken(token);
+  constructor(RefreshTokens) {
+    this.RefreshTokens = RefreshTokens;
+  }
+  async create(token) {
+    const result = await this.RefreshTokens.create(token);
     return result;
-}
-async DeleteRefreshToken(userId){
-    const result = await this.RefreshTokens.DeleteRefreshToken({userId: userId});
+  }
+  async findByUserId(userId) {
+    const result = await this.RefreshTokens.findByUserId(userId);
     return result;
-}
+  }
+  async deleteByUserId(userId) {
+    const result = await this.RefreshTokens.deleteByUserId(userId);
+    return result;
+  }
 }
 
 import PrismaRefreshTokens from "./RefreshTokens/PrismaRefreshTokens.js";

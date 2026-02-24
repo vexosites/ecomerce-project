@@ -2,16 +2,16 @@ class RefreshTokensCachingRepository {
   constructor(cacheProvide) {
     this.cacheProvide = cacheProvide;
   }
-  async set(products){
-    const result = await this.cacheProvide.create
-  }
-  async create(product) {
-    console.log('productsCachingRepository.js-product', product)
-    const result = await this.cacheProvide.create(product);
+  async set(token){
+    const result = await this.cacheProvide.set(token);
     return result;
   }
-  async findByCategoryId(categoryId){
-    const result = await this.cacheProvide.findByCategoryId(categoryId);
+  async create(token) {
+    const result = await this.cacheProvide.create(token);
+    return result;
+  }
+  async findByUserId(userId){
+    const result = await this.cacheProvide.findByUserId(userId);
     return result;
   }
 }

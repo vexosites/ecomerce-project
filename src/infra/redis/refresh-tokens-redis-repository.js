@@ -3,8 +3,12 @@ class RefreshTokensRedisRepository{
         this.redisProvide = redisProvide
         this.categoryIndex = categoryIndex
     }
-    async create(productId, categoryId){
-        const categoryProduct = await this.redisProvide.hSet(`category:${categoryId}`, {productId});
+    async create(token){
+        const result = await this.redisProvide.hSet(`token:${token.id}`, {
+            ...token
+        });
+        await this.redisProvide.set(`token-user-id:${token.userId}`, token.userId);
+        return result;
     }
 }
 

@@ -2,19 +2,19 @@ class PrismaRefreshTokens{
     constructor(PrismaClient){
         this.PrismaClient = PrismaClient
     }
-    async PostRefreshToken(data){
+    async create(refreshToken){
         const result = await this.PrismaClient.RefreshToken.create({
             data:{
-                token: data.token,
-                userId: data.userId
+                token: refreshToken.token,
+                userId: refreshToken.userId
             }
         })
         return result;
     }
-    async DeleteRefreshToken(data){
+    async deleteByUserId(userId){
         const result = await this.PrismaClient.RefreshToken.delete({
             where:{
-                userId: data.userId
+                userId: userId
             }
         })
         return result;
