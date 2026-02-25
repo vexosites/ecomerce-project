@@ -1,8 +1,6 @@
-import TokensService from "../../services/TokensService.js";
 class AuthMiddlewares {
-  constructor(TokenService, refreshTokenReposity){
+  constructor(TokenService){
     this.tokenService = TokenService
-    this.refreshTokenReposity = refreshTokenReposity
   }
  async adminAuth (req, res, next) {
 
@@ -11,6 +9,9 @@ class AuthMiddlewares {
     "refresh-token": refresh_token
     } = req.cookies;  
 
+    console.log('tokens', access_token, refresh_token)
+
+    if(!access_token || !refresh_token) return res.status(401).json({error: 'invalid tokens'})
 
     const result = await this.tokenService.verify(access_token, refresh_token);
 
@@ -21,7 +22,7 @@ class AuthMiddlewares {
     if (result.access_token) {
       res.cookie("access-token", result.access_token, {
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: "lax",
         maxAge: 15 * 60 * 1000,
       });
@@ -29,7 +30,7 @@ class AuthMiddlewares {
     if (result.refresh_token) {
       res.cookie("refresh-token", result.refresh_token, {
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
@@ -69,5 +70,7 @@ next()
 
 }
 
-export default new AuthMiddlewares()
+import TokensService from "../../services/TokensService.js";
+
+export default new AuthMiddlewares(TokensService)
 

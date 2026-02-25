@@ -16,6 +16,6 @@ class RefreshTokensCachingRepository {
   }
 }
 
-import productsRedisRepository from "../../infra/redis/products-redis-repository.js";
+import RefreshTokensRedisRepository from "../../infra/redis/refresh-tokens-redis-repository.js";
 
-export default new RefreshTokensCachingRepository(productsRedisRepository);
+export default new RefreshTokensCachingRepository(RefreshTokensRedisRepository);

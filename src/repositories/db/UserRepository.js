@@ -3,8 +3,8 @@ class UserRepository{
         this.orm = orm;
     }
 
-    async PostUser(data){
-        const result = await this.orm.PostUser(data);
+    async create(data){
+        const result = await this.orm.create(data);
         return result;
     }
 
@@ -14,6 +14,6 @@ class UserRepository{
     }
 }
 
-import PrismaUsers from "./users/PrismaUsers.js";
+import PrismaUsers from "../../infra/Prisma/PrismaUsers.js";
 
 export default new UserRepository(PrismaUsers);

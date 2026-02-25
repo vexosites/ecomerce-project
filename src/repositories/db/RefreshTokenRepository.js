@@ -16,6 +16,6 @@ class RefreshTokenRepository {
   }
 }
 
-import PrismaRefreshTokens from "./RefreshTokens/PrismaRefreshTokens.js";
+import PrismaRefreshTokens from "../../infra/Prisma/PrismaRefreshTokens.js";
 
 export default new RefreshTokenRepository(PrismaRefreshTokens);

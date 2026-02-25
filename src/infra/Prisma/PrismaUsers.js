@@ -4,7 +4,8 @@ class PrismaUsers{
     constructor(PrismaClient){
         this.PrismaClient = PrismaClient
     }
-    async PostUser(data){
+    async create(data){
+        console.log('prisma', data)
         const result = await this.PrismaClient.user.create({
             data:{
                 name: data.name,

@@ -2,15 +2,9 @@ class TokensProvider {
   constructor(jwtProvider) {
     this.jwtProvider = jwtProvider
   }
-  async GenerateTokens(payload) {
-    const AccessToken = this.AccessToken.GenerateAccessToken(payload);
-    const RefreshToken = await this.RefreshToken.GenerateRefreshToken(
-      payload.id
-    );
-    return {
-      AccessToken: AccessToken,
-      RefreshToken: RefreshToken,
-    };
+   async generate(payload, time) {
+    const token = await this.jwtProvider.generate(payload, time);
+    return token;
   }
   async verify(token){
     try {

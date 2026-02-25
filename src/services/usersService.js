@@ -1,21 +1,21 @@
 import AppError from "../errors/UserError.js";
 
 class UserService{
-constructor(userRepository, tokensProvider){
+constructor(userRepository, tokenService){
 this.UserRepository = userRepository;
-this.TokensProvider = tokensProvider;
+this.TokenService = tokenService;
 }
 async post(validator){
 try {
-    await this.UserRepository.PostUser({
+    console.log('validator', validator)
+    const user = await this.UserRepository.create({
         name: validator.name,
         email: validator.email,
         password: validator.password,
         cpf: validator.cpf
     })
 
-
-    const user = await this.UserRepository.FindByEmail(validator.email);
+    console.log('user', user)
 
     const payload = {
         id: user.id, 
@@ -23,14 +23,14 @@ try {
         email: user.email
     }
 
-    const Tokens = await this.TokensProvider.GenerateTokens(payload);
+    const tokens = await this.TokenService.generate(payload);
 
     const result = {
         status: 201,
         user,
         Tokens: {
-            AccessToken: Tokens.AccessToken,
-            RefreshToken: Tokens.RefreshToken
+            access_token: tokens.access_token,
+            refresh_token: tokens.refresh_token
         }
     }
 
@@ -39,13 +39,13 @@ try {
     if(error.code == 'P2002') {
         throw new AppError("user already exists", 403)
     }
-    throw new error;
+    throw error;
 }
 };
 
 async get(validator){
     try {
-        const user = await this.UserRepository.FindByEmail(validator.email);
+        const user = await this.UserRepository.findByEmail(validator.email);
         if(!user) { 
             throw new AppError("user not found", 404);
         }
@@ -81,9 +81,9 @@ async get(validator){
 }
 
 import UsersRepository from "../repositories/users-repository.js";
-import TokensProvider from "../utils/Tokens/TokensProvider.js";
+import TokenService from "./TokensService.js";
 
 export default new UserService(
 UsersRepository,
-TokensProvider
+TokenService
 );

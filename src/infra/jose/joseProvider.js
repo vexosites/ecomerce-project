@@ -3,10 +3,11 @@ class JoseProvider {
     this.jwtVerify = jwtVerify;
     this.jwtSign = jwtSign;
     this.errors = errors;
+    this.secret = new TextEncoder().encode(process.env.JWT_SECRET);
   }
   async verify(token) {
     try {
-      const result = await this.jwtVerify(token, process.env.JWT_SECRET);
+      const result = await this.jwtVerify(token, this.secret);
       return {
         ...result, // base64 decoded
         valid: true,
@@ -29,11 +30,12 @@ class JoseProvider {
     }
   }
   async generate(payload, time) {
+    console.log('payload', payload)
     const result = await new this.jwtSign(payload)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setExpirationTime(time)
-      .sign(process.env.JWT_SECRET);
+      .sign(this.secret);
     return result;
   }
 }

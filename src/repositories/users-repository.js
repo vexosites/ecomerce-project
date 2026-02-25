@@ -3,12 +3,10 @@ export class Products_repository {
     this.db_orm = db_orm;
   }
 
-  async create(product) {
+  async create(user) {
     try {
-      const data = await this.db_orm.create(product);
-
-      const cache = await this.cache_orm.create(data);
-
+      const data = await this.db_orm.create(user);
+      console.log('db-data', data)
       return data;
     } catch (error) {
       throw error;
@@ -27,8 +25,8 @@ export class Products_repository {
   async findByName(user) {}
 }
 
-import PrismaProducts from "../infra/Prisma/PrismaUsers.js";
+import UserRepository from "./db/UserRepository.js";
 
 export default new Products_repository({
-  db_orm: PrismaProducts,
+  db_orm: UserRepository,
 });

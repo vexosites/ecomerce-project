@@ -25,10 +25,10 @@ export class Products_repository {
   async findByName(user) {}
 }
 
-import PrismaProducts from "../infra/Prisma/PrismaUsers.js";
+import RefreshTokenRepository from "./db/RefreshTokenRepository.js";
 import cacheRepository from "./cache/RefreshTokensCachingRepository.js";
 
 export default new Products_repository({
-  db_orm: PrismaProducts,
+  db_orm: RefreshTokenRepository,
   cache_orm: cacheRepository,
 });

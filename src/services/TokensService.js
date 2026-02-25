@@ -3,9 +3,27 @@ class TokensService {
     this.TokensProvider = TokensProvide;
     this.TokensRepository = TokensRepository;
   }
-  async GenerateNewAcessToken() {}
+  async generate(payload) {
+    try {
+      const access_token = await this.TokensProvider.generate(payload, '30m');
+      const refresh_token = await this.TokensProvider.generate({userId: payload.id}, '15d');
+      console.log('refresh-tokend', refresh_token)
+      console.log('access-tokken', access_token)
+      const result = await this.TokensRepository.create({
+        userId: payload.id,
+        token: refresh_token
+      })
+      console.log('result', result);
+      return {
+        access_token,
+        refresh_token
+      }
+    } catch (error) {
+      throw error
+    }
+  }
 
-  async adminVerify(access_token, refresh_token) {
+  async verify(access_token, refresh_token) {
     try {
       const token = await this.TokensProvider.verify(access_token);
 
@@ -35,7 +53,7 @@ class TokensService {
           );
           return {
             valid: true,
-            refreshToken,
+            refreshToken, 
           };
         } catch {
           throw { error: new Error("invalid Refresh token"), valid: false };
@@ -46,6 +64,6 @@ class TokensService {
   }
 }
 
-import Jwt from "../Jwt.js";
-
-export default new TokensService(Jwt);
+import TokensProvider from "../utils/Tokens/TokensProvider.js";
+import refreshTokensRepository from "../repositories/refresh-tokens-repository.js";
+export default new TokensService(TokensProvider, refreshTokensRepository);

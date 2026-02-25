@@ -3,6 +3,7 @@ class PrismaRefreshTokens{
         this.PrismaClient = PrismaClient
     }
     async create(refreshToken){
+        console.log('refreshToken', refreshToken)
         const result = await this.PrismaClient.RefreshToken.create({
             data:{
                 token: refreshToken.token,

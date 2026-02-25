@@ -30,6 +30,8 @@ class UserValidator {
       if (!cpfRegex.test(cpf)) {
         throw new Error("invalid cpf");
       }
+
+      console.log('user', email, name, password, cpf)
   
       return { name, email, password, cpf };
     }
